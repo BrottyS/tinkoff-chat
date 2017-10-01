@@ -8,57 +8,92 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak var changeAvatarButton: UIButton!
+    @IBOutlet weak var editButton: UIButton!
+    
+    let imagePicker = UIImagePickerController()
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        // print(editButton.frame)
+        // невозможно распечатать значение свойства frame на данном этапе,
+        // потому что editButton еще не проинициализирована
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
-        //view.backgroundColor = .red
+        let cornerRadius = changeAvatarButton.frame.width / 2.0
+        changeAvatarButton.layer.cornerRadius = cornerRadius
+        avatarImageView.layer.cornerRadius = cornerRadius
         
-        print(#function)
+        editButton.layer.borderWidth = 1.5
+        editButton.layer.borderColor = UIColor.black.cgColor
+        editButton.layer.cornerRadius = 16.0
+        
+        print("\(#function), editButton.frame: \(editButton.frame)")
+        
+        imagePicker.allowsEditing = false
+        imagePicker.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        print(#function)
+        print("\(#function), editButton.frame: \(editButton.frame)")
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        print(#function)
+        print("\(#function), editButton.frame: \(editButton.frame)")
+        // значение frame, полученное в этом методе, отличается от значения frame,
+        // полученного в методе viewDidLoad, потому, что в viewDidLoad значение frame
+        // равно еще значению, установленному кнопке "Редактировать" при создании разметки
+        // в storyboard, а в этом методе (viewDidAppear) frame равен уже значению,
+        // вычисленному AutoLayout под экран конечного устройства.
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    @IBAction func didTapChangeAvatarButton(_ sender: UIButton) {
+        print("Выбери изображение профиля")
         
-        print(#function)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        print(#function)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+        let pickImageFromGalleryAction = UIAlertAction(title: "Установить из галереи", style: .default) { action in
+            self.imagePicker.sourceType = .photoLibrary
+            self.present(self.imagePicker, animated: true)
+        }
         
-        print(#function)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+        let takePhotoAction = UIAlertAction(title: "Сделать фото", style: .default) { action in
+            self.imagePicker.sourceType = .camera
+            self.present(self.imagePicker, animated: true)
+        }
         
-        print(#function)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+        
+        alert.addAction(pickImageFromGalleryAction)
+        alert.addAction(takePhotoAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true)
     }
 
+    // MARK: - UIImagePickerControllerDelegate
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            avatarImageView.image = pickedImage
+        }
+        dismiss(animated: true, completion: nil)
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
 }
 
