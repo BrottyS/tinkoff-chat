@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		170FE8671F8AB60300F3F506 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170FE8661F8AB60300F3F506 /* MessageModel.swift */; };
+		171BF2FE1F8A2B3800EF7BD5 /* Conversations.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 171BF2FD1F8A2B3800EF7BD5 /* Conversations.storyboard */; };
+		171BF3001F8A2B8500EF7BD5 /* ConversationsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171BF2FF1F8A2B8500EF7BD5 /* ConversationsListViewController.swift */; };
+		171BF3021F8A359600EF7BD5 /* ConversationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171BF3011F8A359600EF7BD5 /* ConversationModel.swift */; };
+		171BF3041F8A388400EF7BD5 /* ConversationCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171BF3031F8A388400EF7BD5 /* ConversationCellConfiguration.swift */; };
+		171BF3071F8A39A900EF7BD5 /* ConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171BF3051F8A39A900EF7BD5 /* ConversationCell.swift */; };
+		171BF30C1F8A873000EF7BD5 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171BF30B1F8A873000EF7BD5 /* DateExtensions.swift */; };
+		171BF30E1F8AA79200EF7BD5 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171BF30D1F8AA79200EF7BD5 /* ConversationViewController.swift */; };
+		171BF3101F8AAE0900EF7BD5 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171BF30F1F8AAE0900EF7BD5 /* MessageCell.swift */; };
+		171BF3121F8AAF3600EF7BD5 /* MessageCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171BF3111F8AAF3600EF7BD5 /* MessageCellConfiguration.swift */; };
 		174414D21F72C9DF00ED8DD9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174414D11F72C9DF00ED8DD9 /* AppDelegate.swift */; };
 		174414D41F72C9DF00ED8DD9 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174414D31F72C9DF00ED8DD9 /* ProfileViewController.swift */; };
 		174414D71F72C9DF00ED8DD9 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 174414D51F72C9DF00ED8DD9 /* Profile.storyboard */; };
@@ -16,6 +26,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		170FE8661F8AB60300F3F506 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
+		171BF2FD1F8A2B3800EF7BD5 /* Conversations.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Conversations.storyboard; sourceTree = "<group>"; };
+		171BF2FF1F8A2B8500EF7BD5 /* ConversationsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsListViewController.swift; sourceTree = "<group>"; };
+		171BF3011F8A359600EF7BD5 /* ConversationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationModel.swift; sourceTree = "<group>"; };
+		171BF3031F8A388400EF7BD5 /* ConversationCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellConfiguration.swift; sourceTree = "<group>"; };
+		171BF3051F8A39A900EF7BD5 /* ConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCell.swift; sourceTree = "<group>"; };
+		171BF30B1F8A873000EF7BD5 /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
+		171BF30D1F8AA79200EF7BD5 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
+		171BF30F1F8AAE0900EF7BD5 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		171BF3111F8AAF3600EF7BD5 /* MessageCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellConfiguration.swift; sourceTree = "<group>"; };
 		174414CE1F72C9DF00ED8DD9 /* TinkoffChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		174414D11F72C9DF00ED8DD9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		174414D31F72C9DF00ED8DD9 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -37,6 +57,62 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		170FE8651F8AB5F000F3F506 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				171BF3011F8A359600EF7BD5 /* ConversationModel.swift */,
+				170FE8661F8AB60300F3F506 /* MessageModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		170FE8681F8AB61F00F3F506 /* ConversationsList */ = {
+			isa = PBXGroup;
+			children = (
+				171BF2FF1F8A2B8500EF7BD5 /* ConversationsListViewController.swift */,
+				171BF3031F8A388400EF7BD5 /* ConversationCellConfiguration.swift */,
+				171BF3051F8A39A900EF7BD5 /* ConversationCell.swift */,
+			);
+			path = ConversationsList;
+			sourceTree = "<group>";
+		};
+		170FE8691F8AB63700F3F506 /* ConversationDetail */ = {
+			isa = PBXGroup;
+			children = (
+				171BF30D1F8AA79200EF7BD5 /* ConversationViewController.swift */,
+				171BF3111F8AAF3600EF7BD5 /* MessageCellConfiguration.swift */,
+				171BF30F1F8AAE0900EF7BD5 /* MessageCell.swift */,
+			);
+			path = ConversationDetail;
+			sourceTree = "<group>";
+		};
+		170FE86A1F8AB65800F3F506 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				174414D51F72C9DF00ED8DD9 /* Profile.storyboard */,
+				174414D31F72C9DF00ED8DD9 /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		170FE86B1F8AB66F00F3F506 /* Conversations */ = {
+			isa = PBXGroup;
+			children = (
+				171BF2FD1F8A2B3800EF7BD5 /* Conversations.storyboard */,
+				170FE8681F8AB61F00F3F506 /* ConversationsList */,
+				170FE8691F8AB63700F3F506 /* ConversationDetail */,
+			);
+			path = Conversations;
+			sourceTree = "<group>";
+		};
+		170FE86C1F8AB6A000F3F506 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				171BF30B1F8A873000EF7BD5 /* DateExtensions.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		174414C51F72C9DF00ED8DD9 = {
 			isa = PBXGroup;
 			children = (
@@ -56,9 +132,11 @@
 		174414D01F72C9DF00ED8DD9 /* TinkoffChat */ = {
 			isa = PBXGroup;
 			children = (
+				170FE86C1F8AB6A000F3F506 /* Utils */,
+				170FE86B1F8AB66F00F3F506 /* Conversations */,
+				170FE86A1F8AB65800F3F506 /* Profile */,
+				170FE8651F8AB5F000F3F506 /* Models */,
 				174414D11F72C9DF00ED8DD9 /* AppDelegate.swift */,
-				174414D31F72C9DF00ED8DD9 /* ProfileViewController.swift */,
-				174414D51F72C9DF00ED8DD9 /* Profile.storyboard */,
 				174414D81F72C9DF00ED8DD9 /* Assets.xcassets */,
 				174414DA1F72C9DF00ED8DD9 /* LaunchScreen.storyboard */,
 				174414DD1F72C9DF00ED8DD9 /* Info.plist */,
@@ -126,6 +204,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				171BF2FE1F8A2B3800EF7BD5 /* Conversations.storyboard in Resources */,
 				174414DC1F72C9DF00ED8DD9 /* LaunchScreen.storyboard in Resources */,
 				174414D91F72C9DF00ED8DD9 /* Assets.xcassets in Resources */,
 				174414E41F72D1BC00ED8DD9 /* Media.xcassets in Resources */,
@@ -140,8 +219,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				171BF30C1F8A873000EF7BD5 /* DateExtensions.swift in Sources */,
 				174414D41F72C9DF00ED8DD9 /* ProfileViewController.swift in Sources */,
+				171BF30E1F8AA79200EF7BD5 /* ConversationViewController.swift in Sources */,
 				174414D21F72C9DF00ED8DD9 /* AppDelegate.swift in Sources */,
+				171BF3121F8AAF3600EF7BD5 /* MessageCellConfiguration.swift in Sources */,
+				171BF3071F8A39A900EF7BD5 /* ConversationCell.swift in Sources */,
+				171BF3021F8A359600EF7BD5 /* ConversationModel.swift in Sources */,
+				171BF3041F8A388400EF7BD5 /* ConversationCellConfiguration.swift in Sources */,
+				170FE8671F8AB60300F3F506 /* MessageModel.swift in Sources */,
+				171BF3001F8A2B8500EF7BD5 /* ConversationsListViewController.swift in Sources */,
+				171BF3101F8AAE0900EF7BD5 /* MessageCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
