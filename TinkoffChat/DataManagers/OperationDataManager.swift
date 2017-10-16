@@ -9,12 +9,24 @@
 import Foundation
 
 class SaveOperation: Operation {
-    var dict: NSDictionary?
+    var profile: ProfileModel?
+    //var dict: NSDictionary?
     var toFile: String?
     var res: Bool = false
     
     override func main() {
-        res = dict!.write(toFile: toFile!, atomically: false)
+        if let readDict = NSDictionary(contentsOfFile: toFile!) {
+            let readProfile = ProfileModel(dict: readDict)
+            if profile == readProfile {
+                DispatchQueue.main.async {
+                    self.res = true
+                    return
+                }
+            }
+        }
+        
+        let dict = profile!.toDictionary()
+        res = dict.write(toFile: toFile!, atomically: false)
     }
 }
 
@@ -37,10 +49,11 @@ class OperationDataManager: DataManagerProtocol {
     }
     
     func save(_ profile: ProfileModel, completion: @escaping (Result) -> ()) {
-        let dict = profile.toDictionary()
+        //let dict = profile.toDictionary()
         
         let saveOperation = SaveOperation()
-        saveOperation.dict = dict
+        //saveOperation.dict = dict
+        saveOperation.profile = profile
         saveOperation.toFile = fileName
         saveOperation.completionBlock = {
             DispatchQueue.main.async {

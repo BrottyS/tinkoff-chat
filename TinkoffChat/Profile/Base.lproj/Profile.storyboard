@@ -20,10 +20,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="672" translatesAutoresizingMaskIntoConstraints="NO" id="4Rf-8n-uSL">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="596"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7lY-kA-DNj">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="682"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="596"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RJi-6V-HR5">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="406"/>
@@ -59,7 +59,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OQe-Ra-7dy">
-                                                <rect key="frame" x="0.0" y="406" width="414" height="200"/>
+                                                <rect key="frame" x="0.0" y="406" width="414" height="190"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Sergey Leonov" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="luG-0c-TCx">
                                                         <rect key="frame" x="16" y="8" width="382" height="40"/>
@@ -74,13 +74,12 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="2Lx-27-SHF">
-                                                        <rect key="frame" x="189" y="81.666666666666629" width="37" height="37"/>
+                                                        <rect key="frame" x="189" y="76.666666666666629" width="37" height="37"/>
                                                         <color key="color" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </activityIndicatorView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="bottom" secondItem="ddv-Tj-a8c" secondAttribute="bottom" priority="250" constant="8" id="1MH-mJ-GpO"/>
                                                     <constraint firstItem="ddv-Tj-a8c" firstAttribute="leading" secondItem="OQe-Ra-7dy" secondAttribute="leading" constant="16" id="1ZS-0e-PjW"/>
                                                     <constraint firstAttribute="trailing" secondItem="luG-0c-TCx" secondAttribute="trailing" constant="16" id="All-aA-SFY"/>
                                                     <constraint firstAttribute="trailing" secondItem="ddv-Tj-a8c" secondAttribute="trailing" constant="16" id="KG5-eQ-uYS"/>
@@ -89,70 +88,6 @@
                                                     <constraint firstItem="2Lx-27-SHF" firstAttribute="centerX" secondItem="OQe-Ra-7dy" secondAttribute="centerX" id="kJ4-9O-Ip2"/>
                                                     <constraint firstItem="luG-0c-TCx" firstAttribute="leading" secondItem="OQe-Ra-7dy" secondAttribute="leading" constant="16" id="uGq-JY-RsL"/>
                                                     <constraint firstItem="2Lx-27-SHF" firstAttribute="centerY" secondItem="OQe-Ra-7dy" secondAttribute="centerY" id="whX-Og-mRg"/>
-                                                </constraints>
-                                            </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="inD-1f-ZMR">
-                                                <rect key="frame" x="0.0" y="606" width="414" height="76"/>
-                                                <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Q1-JF-5o2" customClass="RoundedButton" customModule="TinkoffChat" customModuleProvider="target">
-                                                        <rect key="frame" x="16" y="16" width="183" height="44"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="44" id="Pae-Yn-F6i"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                        <state key="normal" title="GCD">
-                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </state>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                <real key="value" value="12"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                <real key="value" value="2"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
-                                                        <connections>
-                                                            <action selector="didGCDButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2na-Pq-uiS"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TI7-KC-Q6g" customClass="RoundedButton" customModule="TinkoffChat" customModuleProvider="target">
-                                                        <rect key="frame" x="215" y="16" width="183" height="44"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="44" id="3zS-1v-LWH"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                        <state key="normal" title="Operation">
-                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </state>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                <real key="value" value="12"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                <real key="value" value="2"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
-                                                        <connections>
-                                                            <action selector="didOperationButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HxN-Wo-cvW"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="centerX" secondItem="0Q1-JF-5o2" secondAttribute="trailing" constant="8" id="435-rA-GUu"/>
-                                                    <constraint firstItem="0Q1-JF-5o2" firstAttribute="top" secondItem="inD-1f-ZMR" secondAttribute="top" constant="16" id="Kj1-mM-zeu"/>
-                                                    <constraint firstAttribute="bottom" secondItem="TI7-KC-Q6g" secondAttribute="bottom" constant="16" id="Mad-gf-hh1"/>
-                                                    <constraint firstItem="0Q1-JF-5o2" firstAttribute="leading" secondItem="inD-1f-ZMR" secondAttribute="leading" constant="16" id="NTg-6H-3e5"/>
-                                                    <constraint firstItem="TI7-KC-Q6g" firstAttribute="top" secondItem="inD-1f-ZMR" secondAttribute="top" constant="16" id="Rl8-9I-jf9"/>
-                                                    <constraint firstItem="TI7-KC-Q6g" firstAttribute="leading" secondItem="inD-1f-ZMR" secondAttribute="centerX" constant="8" id="XTJ-8k-YOf"/>
-                                                    <constraint firstAttribute="bottom" secondItem="0Q1-JF-5o2" secondAttribute="bottom" constant="16" id="dLJ-Ag-pqL"/>
-                                                    <constraint firstAttribute="trailing" secondItem="TI7-KC-Q6g" secondAttribute="trailing" constant="16" id="jbt-sD-wdt"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -164,15 +99,83 @@
                                     <constraint firstAttribute="bottom" secondItem="7lY-kA-DNj" secondAttribute="bottom" id="IlO-Oq-nHt"/>
                                     <constraint firstItem="7lY-kA-DNj" firstAttribute="leading" secondItem="4Rf-8n-uSL" secondAttribute="leading" id="LYB-Fb-HrO"/>
                                     <constraint firstAttribute="trailing" secondItem="7lY-kA-DNj" secondAttribute="trailing" id="fv7-Vv-YSb"/>
+                                    <constraint firstItem="7lY-kA-DNj" firstAttribute="height" secondItem="4Rf-8n-uSL" secondAttribute="height" id="gH5-Yc-A7z"/>
                                 </constraints>
                             </scrollView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="inD-1f-ZMR" userLabel="Buttons View">
+                                <rect key="frame" x="0.0" y="660" width="414" height="76"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Q1-JF-5o2" customClass="RoundedButton" customModule="TinkoffChat" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="16" width="183" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="Pae-Yn-F6i"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <state key="normal" title="GCD">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="12"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="2"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="didGCDButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2na-Pq-uiS"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TI7-KC-Q6g" customClass="RoundedButton" customModule="TinkoffChat" customModuleProvider="target">
+                                        <rect key="frame" x="215" y="16" width="183" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="3zS-1v-LWH"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <state key="normal" title="Operation">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="12"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="2"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="didOperationButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HxN-Wo-cvW"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="0Q1-JF-5o2" secondAttribute="trailing" constant="8" id="435-rA-GUu"/>
+                                    <constraint firstItem="0Q1-JF-5o2" firstAttribute="top" secondItem="inD-1f-ZMR" secondAttribute="top" constant="16" id="Kj1-mM-zeu"/>
+                                    <constraint firstAttribute="bottom" secondItem="TI7-KC-Q6g" secondAttribute="bottom" constant="16" id="Mad-gf-hh1"/>
+                                    <constraint firstItem="0Q1-JF-5o2" firstAttribute="leading" secondItem="inD-1f-ZMR" secondAttribute="leading" constant="16" id="NTg-6H-3e5"/>
+                                    <constraint firstItem="TI7-KC-Q6g" firstAttribute="top" secondItem="inD-1f-ZMR" secondAttribute="top" constant="16" id="Rl8-9I-jf9"/>
+                                    <constraint firstItem="TI7-KC-Q6g" firstAttribute="leading" secondItem="inD-1f-ZMR" secondAttribute="centerX" constant="8" id="XTJ-8k-YOf"/>
+                                    <constraint firstAttribute="bottom" secondItem="0Q1-JF-5o2" secondAttribute="bottom" constant="16" id="dLJ-Ag-pqL"/>
+                                    <constraint firstAttribute="trailing" secondItem="TI7-KC-Q6g" secondAttribute="trailing" constant="16" id="jbt-sD-wdt"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="4Rf-8n-uSL" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="29X-8u-ard"/>
                             <constraint firstItem="4Rf-8n-uSL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9rR-uL-ZcZ"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="4Rf-8n-uSL" secondAttribute="bottom" id="Lbh-BJ-e1g"/>
+                            <constraint firstItem="inD-1f-ZMR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="FEr-gM-Y5q"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="inD-1f-ZMR" secondAttribute="bottom" id="Nik-84-bCg"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="4Rf-8n-uSL" secondAttribute="trailing" id="bJg-13-iZr"/>
+                            <constraint firstItem="inD-1f-ZMR" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ifj-mm-5Ec"/>
+                            <constraint firstItem="inD-1f-ZMR" firstAttribute="top" secondItem="4Rf-8n-uSL" secondAttribute="bottom" id="tCA-BS-TAh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -187,6 +190,7 @@
                         <outlet property="aboutMeTextField" destination="ddv-Tj-a8c" id="4dp-k1-XaE"/>
                         <outlet property="activityIndicatorView" destination="2Lx-27-SHF" id="o13-8S-Vps"/>
                         <outlet property="avatarImageView" destination="5tU-8O-jXD" id="2y9-zS-6Ld"/>
+                        <outlet property="buttonsView" destination="inD-1f-ZMR" id="0Qu-HD-NjD"/>
                         <outlet property="changeAvatarButton" destination="Zkg-HV-RSD" id="zku-LP-VyP"/>
                         <outlet property="gcdButton" destination="0Q1-JF-5o2" id="GpN-h5-aBl"/>
                         <outlet property="nameTextField" destination="luG-0c-TCx" id="9P8-ku-lXt"/>

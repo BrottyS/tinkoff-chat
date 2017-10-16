@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -20,7 +20,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
-    
+    @IBOutlet weak var buttonsView: UIView!
     @IBOutlet weak var gcdButton: UIButton!
     @IBOutlet weak var operationButton: UIButton!
     
@@ -30,6 +30,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     private let profileFileName = "Profile.plist"
     private var profile: ProfileModel!
     
+    private var isSaving = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,28 +39,25 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         changeAvatarButton.layer.cornerRadius = cornerRadius
         avatarImageView.layer.cornerRadius = cornerRadius
         
-        /*
-        editButton.layer.borderWidth = 1.5
-        editButton.layer.borderColor = UIColor.black.cgColor
-        editButton.layer.cornerRadius = 16.0
-        
-        print("\(#function), editButton.frame: \(editButton.frame)")
-         */
-        
         imagePicker.allowsEditing = false
         imagePicker.delegate = self
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
-        let tap = UIGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        scrollView.addGestureRecognizer(tap)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
+        nameTextField.text = ""
+        aboutMeTextField.text = ""
+        nameTextField.delegate = self
+        aboutMeTextField.delegate = self
         
         readProfile()
     }
     
     @objc func dismissKeyboard() {
-        nameTextField.resignFirstResponder()
+        view.endEditing(true)
     }
     
     deinit {
@@ -94,6 +93,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             avatarImageView.image = pickedImage
+            if !isSaving {
+                makeControlsEnabled(true)
+            }
         }
         dismiss(animated: true, completion: nil)
     }
@@ -107,6 +109,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     private func saveProfile() {
+        activityIndicatorView.startAnimating()
+        makeControlsEnabled(false)
+        isSaving = true
+        
         dataManager.save(profile) { result in
             switch result {
             case .success:
@@ -114,6 +120,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                 let successAlert = UIAlertController(title: nil, message: "Данные сохранены", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "OK", style: .default, handler: { action in
                     successAlert.dismiss(animated: true, completion: nil)
+                    self.activityIndicatorView.stopAnimating()
+                    self.makeControlsEnabled(true)
+                    self.isSaving = false
                 })
                 successAlert.addAction(okAction)
                 self.present(successAlert, animated: true, completion: nil)
@@ -123,6 +132,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                 let failureAlert = UIAlertController(title: "Ошибка", message: "Не удалось сохранить данные", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "OK", style: .default, handler: { action in
                     failureAlert.dismiss(animated: true, completion: nil)
+                    self.activityIndicatorView.stopAnimating()
+                    self.makeControlsEnabled(true)
+                    self.isSaving = false
                 })
                 let retryAction = UIAlertAction(title: "Повторить", style: .default, handler: { action in
                     failureAlert.dismiss(animated: true, completion: nil)
@@ -155,44 +167,51 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
     }
     
-    @IBAction func didGCDButtonTap(_ sender: UIButton) {
+    private func collectProfileData() {
         profile = ProfileModel()
         profile.name = nameTextField.text
         profile.aboutMe = aboutMeTextField.text
         if let image = avatarImageView.image {
             profile.avatarImageData = UIImagePNGRepresentation(image) as NSData?
         }
-        
+    }
+    
+    @IBAction func didGCDButtonTap(_ sender: UIButton) {
+        collectProfileData()
         dataManager = GCDDataManager(fileName: profileFileName)
-        
         saveProfile()
     }
     
     @IBAction func didOperationButtonTap(_ sender: UIButton) {profile = ProfileModel()
-        profile.name = nameTextField.text
-        profile.aboutMe = aboutMeTextField.text
-        if let image = avatarImageView.image {
-            profile.avatarImageData = UIImagePNGRepresentation(image) as NSData?
-        }
-        
+        collectProfileData()
         dataManager = OperationDataManager(fileName: profileFileName)
-        
         saveProfile()
     }
     
-    @objc func keyboardWillShow(notification: NSNotification) {
+    @objc func keyboardDidShow(notification: NSNotification) {
         var userInfo = notification.userInfo!
-        var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+        let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         
-        var contentInset: UIEdgeInsets = self.scrollView.contentInset
-        contentInset.bottom = keyboardFrame.size.height
-        scrollView.contentInset = contentInset
+        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height - buttonsView.frame.height, right: 0)
+        scrollView.contentInset = contentInsets
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
         let contentInset: UIEdgeInsets = UIEdgeInsets.zero
         scrollView.contentInset = contentInset
+    }
+    
+    private func makeControlsEnabled(_ enable: Bool) {
+        gcdButton.isEnabled = enable
+        operationButton.isEnabled = enable
+    }
+    
+    // UITextFieldDelegate
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if !isSaving {
+            makeControlsEnabled(true)
+        }
     }
     
 }

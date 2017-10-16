@@ -20,6 +20,16 @@ class GCDDataManager: DataManagerProtocol {
     func save(_ profile: ProfileModel, completion: @escaping (Result) -> ()) {
         let dict = profile.toDictionary()
         DispatchQueue.global(qos: .utility).async {
+            if let readDict = NSDictionary(contentsOfFile: self.fileName) {
+                let readProfile = ProfileModel(dict: readDict)
+                if profile == readProfile {
+                    DispatchQueue.main.async {
+                        completion(.success)
+                        return
+                    }
+                }
+            }
+
             let res = dict.write(toFile: self.fileName, atomically: false)
             DispatchQueue.main.async {
                 completion(res == true ? .success : .failure)

@@ -43,3 +43,15 @@ class ProfileModel {
     }
     
 }
+
+extension ProfileModel: Equatable {
+    
+    static func == (lhs: ProfileModel, rhs: ProfileModel) -> Bool {
+        if lhs.name != rhs.name { return false }
+        if lhs.aboutMe != rhs.aboutMe { return false }
+        if lhs.avatarImageData == nil && rhs.avatarImageData == nil { return true }
+        guard let lData = lhs.avatarImageData, let rData = rhs.avatarImageData else { return false }
+        return lData.isEqual(to: rData as Data)
+    }
+    
+}
