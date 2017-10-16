@@ -9,20 +9,26 @@
 import UIKit
 
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var changeAvatarButton: UIButton!
-    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var aboutMeTextField: UITextField!
+    //@IBOutlet weak var editButton: UIButton!
+    
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    
+    
+    @IBOutlet weak var gcdButton: UIButton!
+    @IBOutlet weak var operationButton: UIButton!
     
     let imagePicker = UIImagePickerController()
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
-        // print(editButton.frame)
-        // невозможно распечатать значение свойства frame на данном этапе,
-        // потому что editButton еще не проинициализирована
-    }
+    private var dataManager: DataManagerProtocol!
+    private let profileFileName = "Profile.plist"
+    private var profile: ProfileModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,31 +37,32 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         changeAvatarButton.layer.cornerRadius = cornerRadius
         avatarImageView.layer.cornerRadius = cornerRadius
         
+        /*
         editButton.layer.borderWidth = 1.5
         editButton.layer.borderColor = UIColor.black.cgColor
         editButton.layer.cornerRadius = 16.0
         
         print("\(#function), editButton.frame: \(editButton.frame)")
+         */
         
         imagePicker.allowsEditing = false
         imagePicker.delegate = self
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
-        print("\(#function), editButton.frame: \(editButton.frame)")
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        let tap = UIGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        scrollView.addGestureRecognizer(tap)
+        
+        readProfile()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        print("\(#function), editButton.frame: \(editButton.frame)")
-        // значение frame, полученное в этом методе, отличается от значения frame,
-        // полученного в методе viewDidLoad, потому, что в viewDidLoad значение frame
-        // равно еще значению, установленному кнопке "Редактировать" при создании разметки
-        // в storyboard, а в этом методе (viewDidAppear) frame равен уже значению,
-        // вычисленному AutoLayout под экран конечного устройства.
+    @objc func dismissKeyboard() {
+        nameTextField.resignFirstResponder()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     @IBAction func didTapChangeAvatarButton(_ sender: UIButton) {
@@ -97,6 +104,95 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     @IBAction func didCloseBarButtonItemTap(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    private func saveProfile() {
+        dataManager.save(profile) { result in
+            switch result {
+            case .success:
+                print("Успешно сохранено")
+                let successAlert = UIAlertController(title: nil, message: "Данные сохранены", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: { action in
+                    successAlert.dismiss(animated: true, completion: nil)
+                })
+                successAlert.addAction(okAction)
+                self.present(successAlert, animated: true, completion: nil)
+                
+            case .failure:
+                print("Ошибка при сохранении")
+                let failureAlert = UIAlertController(title: "Ошибка", message: "Не удалось сохранить данные", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: { action in
+                    failureAlert.dismiss(animated: true, completion: nil)
+                })
+                let retryAction = UIAlertAction(title: "Повторить", style: .default, handler: { action in
+                    failureAlert.dismiss(animated: true, completion: nil)
+                    self.saveProfile()
+                })
+                failureAlert.addAction(okAction)
+                failureAlert.addAction(retryAction)
+                self.present(failureAlert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    private func readProfile() {
+        //dataManager = GCDDataManager(fileName: profileFileName)
+        // or
+        dataManager = OperationDataManager(fileName: profileFileName)
+        dataManager.read() { profile in
+            if let profile = profile {
+                self.profile = profile
+                //print(self.profile.toDictionary())
+                self.nameTextField.text = self.profile.name
+                self.aboutMeTextField.text = self.profile.aboutMe
+                let data = self.profile.avatarImageData as Data?
+                if let data = data, let image = UIImage(data: data) {
+                    self.avatarImageView.image = image
+                } else {
+                    self.avatarImageView.image = UIImage(named: "placeholder-user")
+                }
+            }
+        }
+    }
+    
+    @IBAction func didGCDButtonTap(_ sender: UIButton) {
+        profile = ProfileModel()
+        profile.name = nameTextField.text
+        profile.aboutMe = aboutMeTextField.text
+        if let image = avatarImageView.image {
+            profile.avatarImageData = UIImagePNGRepresentation(image) as NSData?
+        }
+        
+        dataManager = GCDDataManager(fileName: profileFileName)
+        
+        saveProfile()
+    }
+    
+    @IBAction func didOperationButtonTap(_ sender: UIButton) {profile = ProfileModel()
+        profile.name = nameTextField.text
+        profile.aboutMe = aboutMeTextField.text
+        if let image = avatarImageView.image {
+            profile.avatarImageData = UIImagePNGRepresentation(image) as NSData?
+        }
+        
+        dataManager = OperationDataManager(fileName: profileFileName)
+        
+        saveProfile()
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        var userInfo = notification.userInfo!
+        var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+        
+        var contentInset: UIEdgeInsets = self.scrollView.contentInset
+        contentInset.bottom = keyboardFrame.size.height
+        scrollView.contentInset = contentInset
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        let contentInset: UIEdgeInsets = UIEdgeInsets.zero
+        scrollView.contentInset = contentInset
     }
     
 }
