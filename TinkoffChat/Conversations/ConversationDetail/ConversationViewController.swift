@@ -10,21 +10,22 @@ import UIKit
 
 class ConversationViewController: UIViewController, UITableViewDataSource {
     
+    var user: User?
+    
     // MARK: - IBOutlets
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var messageTextField: UITextField!
+    @IBOutlet weak var sendButton: UIButton!
     
     // MARK: - Private constants
     
     private let incomingMessageCellId = "IncomingMessageCell"
     private let outgoingMessageCellId = "OutgoingMessageCell"
     
-    private let data = [MessageModel(text: "А", incoming: true),
-                        MessageModel(text: "Б", incoming: false),
-                        MessageModel(text: "Сообщение длиной  30 символов", incoming: true),
-                        MessageModel(text: "Сообщение длиной  30 символов", incoming: false),
-                        MessageModel(text: "А это сообщение длиной аж 300 символов. Оно нужно для того чтобы проверить, насколько правильно ячейки отображают длинный текст, такой, как этот. Этот текст очень длинный, надо чем-то его заполнить до трехсот символов. Осталось еще немного, и цель будет достигнута. Триста символов, е-мое. Finally!!", incoming: true),
-                        MessageModel(text: "А это сообщение длиной аж 300 символов. Оно нужно для того чтобы проверить, насколько правильно ячейки отображают длинный текст, такой, как этот. Этот текст очень длинный, надо чем-то его заполнить до трехсот символов. Осталось еще немного, и цель будет достигнута. Триста символов, е-мое. Finally!!", incoming: false),]
+    private var data: [MessageModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,39 @@ class ConversationViewController: UIViewController, UITableViewDataSource {
         tableView.dataSource = self
         
         tableView.tableFooterView = UIView()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        CommunicationManager.default.delegate = self
+        data = HistoryManager.default.historyFor(userID: user!.userID)
+        tableView.reloadData()
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    @objc func keyboardDidShow(notification: NSNotification) {
+        var userInfo = notification.userInfo!
+        let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+    
+        bottomConstraint.constant = -keyboardFrame.height
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        bottomConstraint.constant = 0
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - UITableViewDataSource
@@ -61,5 +95,21 @@ class ConversationViewController: UIViewController, UITableViewDataSource {
         
         return cell
     }
+    
+    @IBAction func didSendButtonTap(_ sender: UIButton) {
+        let message = messageTextField.text
+        CommunicationManager.default.sendMessage(message!, to: user!.userID)
+    }
+    
+}
 
+extension ConversationViewController: CommunicationManagerDelegate {
+    
+    func didDataChange() {
+        DispatchQueue.main.async {
+            self.data = HistoryManager.default.historyFor(userID: self.user!.userID)
+            self.tableView.reloadData()
+        }
+    }
+    
 }
