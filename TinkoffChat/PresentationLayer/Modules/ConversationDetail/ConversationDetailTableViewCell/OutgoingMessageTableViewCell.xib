@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="OutgoingMessageCell" id="yhC-HZ-Ryt" customClass="MessageTableViewCell" customModule="TinkoffChat" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yhC-HZ-Ryt" id="54o-TI-gqR">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GsS-XC-kfh">
+                        <rect key="frame" x="94" y="0.0" width="281" height="43.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;Message&gt;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0u-wP-uzy">
+                                <rect key="frame" x="16" y="8" width="249" height="27.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="h0u-wP-uzy" secondAttribute="bottom" constant="8" id="4k1-Ua-UpB"/>
+                            <constraint firstItem="h0u-wP-uzy" firstAttribute="leading" secondItem="GsS-XC-kfh" secondAttribute="leading" constant="16" id="IAt-GS-IRQ"/>
+                            <constraint firstAttribute="trailing" secondItem="h0u-wP-uzy" secondAttribute="trailing" constant="16" id="tSH-g9-15J"/>
+                            <constraint firstItem="h0u-wP-uzy" firstAttribute="top" secondItem="GsS-XC-kfh" secondAttribute="top" constant="8" id="vKz-lH-RLX"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="GsS-XC-kfh" firstAttribute="width" secondItem="54o-TI-gqR" secondAttribute="width" multiplier="3/4" id="Ipi-0g-bhF"/>
+                    <constraint firstAttribute="bottom" secondItem="GsS-XC-kfh" secondAttribute="bottom" id="Llg-Nc-a9y"/>
+                    <constraint firstAttribute="trailing" secondItem="GsS-XC-kfh" secondAttribute="trailing" id="V35-la-GJ1"/>
+                    <constraint firstItem="GsS-XC-kfh" firstAttribute="top" secondItem="54o-TI-gqR" secondAttribute="top" id="Yx1-S3-Pq7"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="messageLabel" destination="h0u-wP-uzy" id="e3b-eq-Da7"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>
