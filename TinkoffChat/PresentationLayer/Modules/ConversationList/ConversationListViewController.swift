@@ -36,6 +36,7 @@ class ConversationListViewController: UIViewController, ConversationListModelDel
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureNavigationItem()
         configureTableView()
         
         model.getOnlineUsers()
@@ -43,10 +44,26 @@ class ConversationListViewController: UIViewController, ConversationListModelDel
 
     // MARK: - Private methods
     
+    private func configureNavigationItem() {
+        navigationItem.title = "Tinkoff Chat"
+        
+        let profileBarButtonItem = UIBarButtonItem(title: "Profile",
+                                                   style: .plain,
+                                                   target: self,
+                                                   action: #selector(didProfileBarButtonItemTap(_:)))
+        navigationItem.rightBarButtonItem = profileBarButtonItem
+    }
+    
     private func configureTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UINib(nibName: "ConversationListTableViewCell", bundle: nil), forCellReuseIdentifier: "\(ConversationListTableViewCell.self)")
+    }
+    
+    @IBAction func didProfileBarButtonItemTap(_ sender: UIBarButtonItem) {
+        let profileStoryboard = UIStoryboard(name: "Profile", bundle: nil)
+        let profileNavigationController = profileStoryboard.instantiateViewController(withIdentifier: "ProfileNavigationController")
+        present(profileNavigationController, animated: true, completion: nil)
     }
     
     // MARK: - IConversationListModelDelegate

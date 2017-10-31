@@ -19,7 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         let controller = rootAssembly.conversationListModule.conversationListViewController()
-        window?.rootViewController = controller
+        let navController = UINavigationController()
+        navController.addChildViewController(controller)
+        window?.rootViewController = navController
         window?.makeKeyAndVisible()
         
         return true
