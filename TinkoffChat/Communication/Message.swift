@@ -7,9 +7,7 @@
 //
 
 struct Message: Codable {
-    
     var eventType: String?
     var messageId: String?
     var text: String?
-    
 }

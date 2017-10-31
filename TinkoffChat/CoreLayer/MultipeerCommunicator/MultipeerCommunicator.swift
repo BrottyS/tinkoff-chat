@@ -8,12 +8,35 @@
 
 import MultipeerConnectivity
 
-class MultipeerCommunicator: NSObject, Communicator {
+protocol ICommunicator: class {
+    func sendMessage(string: String, to userID: String, completionHandler: ((_ success: Bool, _ error: Error?) -> ())?)
+    weak var delegate: MultipeerCommunicatorDelegate? { get set }
+    var online: Bool { get set }
+    func localPeerDisplayName() -> String
+}
+
+protocol MultipeerCommunicatorDelegate: class {
+    // discovering
+    func didFoundUser(userID: String, userName: String?)
+    func didLostUser(userID: String)
+    
+    // errors
+    func failedToStartBrowsingForUsers(error: Error)
+    func failedToStartAdvertising(error: Error)
+    
+    // messages
+    func didReceiveMessage(text: String, fromUser: String, toUser: String)
+    
+    // status
+    func didChangeUserStatus(userID: String, online: Bool)
+}
+
+class MultipeerCommunicator: NSObject, ICommunicator {
     let kServiceType = "tinkoff-chat"
     let kLocalPeerId = MCPeerID(displayName: String(describing: UIDevice.current.identifierForVendor!))
     let kDiscoveryInfo = ["userName": "BrottyS"]
     
-    weak var delegate: CommunicatorDelegate?
+    weak var delegate: MultipeerCommunicatorDelegate?
     var online: Bool = false
     
     private let serviceAdvertiser: MCNearbyServiceAdvertiser
@@ -61,6 +84,10 @@ class MultipeerCommunicator: NSObject, Communicator {
             completionHandler?(false, nil)
             print("Did not found a session with userID: \(userID)")
         }
+    }
+    
+    func localPeerDisplayName() -> String {
+        return kLocalPeerId.displayName
     }
     
     func sessionFor(_ remotePeerID: MCPeerID) -> MCSession {

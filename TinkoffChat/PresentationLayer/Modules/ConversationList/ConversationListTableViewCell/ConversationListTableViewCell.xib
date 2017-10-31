@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="74" id="F9s-Lo-C7d" userLabel="ConversationListTableViewCell" customClass="ConversationListTableViewCell" customModule="TinkoffChat" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="74"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="F9s-Lo-C7d" id="cSV-TV-YNn">
+                <rect key="frame" x="0.0" y="0.0" width="287" height="73.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="&lt;Name&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jYw-pU-uGX">
+                        <rect key="frame" x="16" y="8" width="201.5" height="18"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="&lt;Date&gt;" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ne-8Y-Uji">
+                        <rect key="frame" x="225.5" y="8" width="45.5" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.54901960780000003" green="0.54901960780000003" blue="0.54901960780000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;Message&gt;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wDl-kh-GQK">
+                        <rect key="frame" x="16" y="34" width="255" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.54901960780000003" green="0.54901960780000003" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="0ne-8Y-Uji" firstAttribute="top" secondItem="cSV-TV-YNn" secondAttribute="top" constant="8" id="0Bq-fH-tWK"/>
+                    <constraint firstItem="0ne-8Y-Uji" firstAttribute="leading" secondItem="jYw-pU-uGX" secondAttribute="trailing" constant="8" id="9yg-mP-ELo"/>
+                    <constraint firstItem="jYw-pU-uGX" firstAttribute="top" secondItem="cSV-TV-YNn" secondAttribute="top" constant="8" id="Jck-WA-TfU"/>
+                    <constraint firstItem="jYw-pU-uGX" firstAttribute="leading" secondItem="cSV-TV-YNn" secondAttribute="leading" constant="16" id="NEt-er-FFt"/>
+                    <constraint firstItem="wDl-kh-GQK" firstAttribute="top" secondItem="jYw-pU-uGX" secondAttribute="bottom" constant="8" id="QwS-G6-eqA"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="wDl-kh-GQK" secondAttribute="bottom" constant="8" id="asc-Yf-ahx"/>
+                    <constraint firstItem="wDl-kh-GQK" firstAttribute="leading" secondItem="cSV-TV-YNn" secondAttribute="leading" constant="16" id="epu-20-80u"/>
+                    <constraint firstAttribute="trailing" secondItem="wDl-kh-GQK" secondAttribute="trailing" constant="16" id="unm-vL-u1Q"/>
+                    <constraint firstAttribute="trailing" secondItem="0ne-8Y-Uji" secondAttribute="trailing" constant="16" id="wEf-K5-8a8"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="dateLabel" destination="0ne-8Y-Uji" id="gbq-zJ-7Z4"/>
+                <outlet property="messageLabel" destination="wDl-kh-GQK" id="XAC-yC-lqE"/>
+                <outlet property="nameLabel" destination="jYw-pU-uGX" id="Ni0-pm-awf"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

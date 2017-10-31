@@ -8,6 +8,8 @@
 
 import Foundation
 
+
+
 protocol CommunicationManagerDelegate {
     func didDataChange()
 }
@@ -67,7 +69,7 @@ class CommunicationManager {
     
 }
 
-extension CommunicationManager: CommunicatorDelegate {
+extension CommunicationManager: MultipeerCommunicatorDelegate {
     
     func didFoundUser(userID: String, userName: String?) {
         print("Found user with userID: \(userID), userName: \(userName ?? "?")")
