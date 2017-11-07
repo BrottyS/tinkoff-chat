@@ -13,7 +13,7 @@ enum Section: Int {
     case offline
 }
 
-class ConversationListViewController: UIViewController, ConversationListModelDelegate, UITableViewDataSource, UITableViewDelegate {
+class ConversationListViewController: UIViewController, IConversationListModelDelegate, UITableViewDataSource, UITableViewDelegate {
 
     // MARK: - IBOutlets
     

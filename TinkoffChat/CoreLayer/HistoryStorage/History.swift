@@ -9,10 +9,8 @@
 import Foundation
 
 struct History {
-    
     var date: Date
     var from: String
     var to: String
     var message: MessageModel
-    
 }

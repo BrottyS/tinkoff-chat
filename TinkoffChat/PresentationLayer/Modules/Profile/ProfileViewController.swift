@@ -23,6 +23,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var buttonsView: UIView!
     @IBOutlet weak var gcdButton: UIButton!
     @IBOutlet weak var operationButton: UIButton!
+    @IBOutlet weak var saveButton: UIButton!
     
     let imagePicker = UIImagePickerController()
     
@@ -31,6 +32,17 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     private var profile: ProfileModel!
     
     private var isSaving = false
+    
+    private let model: IProfileInteractor
+    
+    init(model: IProfileInteractor) {
+        self.model = model
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -182,9 +194,15 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         saveProfile()
     }
     
-    @IBAction func didOperationButtonTap(_ sender: UIButton) {profile = ProfileModel()
+    @IBAction func didOperationButtonTap(_ sender: UIButton) {
         collectProfileData()
         dataManager = OperationDataManager(fileName: profileFileName)
+        saveProfile()
+    }
+    
+    @IBAction func didSaveButtonTap(_ sender: UIButton) {
+        collectProfileData()
+        //dataManager = StorageManager(coreDataStack: )
         saveProfile()
     }
     

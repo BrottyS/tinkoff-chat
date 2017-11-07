@@ -44,7 +44,7 @@ class ConversationViewController: UIViewController, UITableViewDataSource {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        CommunicationManager.default.delegate = self
+        //CommunicationManager.default.delegate = self
         data = HistoryManager.default.historyFor(userID: user!.userID)
         tableView.reloadData()
     }
@@ -98,11 +98,12 @@ class ConversationViewController: UIViewController, UITableViewDataSource {
     
     @IBAction func didSendButtonTap(_ sender: UIButton) {
         let message = messageTextField.text
-        CommunicationManager.default.sendMessage(message!, to: user!.userID)
+        //CommunicationManager.default.sendMessage(message!, to: user!.userID)
     }
     
 }
 
+/*
 extension ConversationViewController: CommunicationManagerDelegate {
     
     func didDataChange() {
@@ -112,4 +113,4 @@ extension ConversationViewController: CommunicationManagerDelegate {
         }
     }
     
-}
+}*/

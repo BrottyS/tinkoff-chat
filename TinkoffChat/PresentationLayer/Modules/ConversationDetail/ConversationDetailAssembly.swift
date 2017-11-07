@@ -6,8 +6,10 @@
 //  Copyright © 2017 TCS. All rights reserved.
 //
 
-class ConversationDetailAssembly {
+class ConversationDetailAssembly: IConversationDetailAssembly {
     
-    
-    
+    func conversationDetailViewController() -> ConversationDetailViewController {
+        
+    }
+
 }

@@ -7,26 +7,29 @@
 //
 
 protocol IConversationListModel: class {
-    weak var delegate: ConversationListModelDelegate? { get set }
+    weak var delegate: IConversationListModelDelegate? { get set }
     func getOnlineUsers()
 }
 
-protocol ConversationListModelDelegate: class {
+protocol IConversationListModelDelegate: class {
     func setupDataSource(_ dataSource: [ConversationListViewModel])
 }
 
 class ConversationListModel: IConversationListModel {
     
-    weak var delegate: ConversationListModelDelegate?
+    weak var delegate: IConversationListModelDelegate?
     
-    private let communicatorService: ICommunicatorService
+    private let communicationService: ICommunicationService
+    private let historyService: IHistoryService
     
-    init(communicatorService: ICommunicatorService) {
-        self.communicatorService = communicatorService
+    init(communicationService: ICommunicationService,
+         historyService: IHistoryService) {
+        self.communicationService = communicationService
+        self.historyService = historyService
     }
     
     func getOnlineUsers() {
-        let onlineUsers = communicatorService.getOnlineUsers()
+        let onlineUsers = communicationService.getOnlineUsers()
         var cells: [ConversationListViewModel] = []
         for user in onlineUsers {
             let lastMessage = HistoryManager.default.lastMessageFor(userID: user.userID)
@@ -42,10 +45,18 @@ class ConversationListModel: IConversationListModel {
     
 }
 
-extension ConversationListModel: CommunicatorServiceDelegate {
+extension ConversationListModel: ICommunicationServiceDelegate {
     
     func didDataChange() {
         getOnlineUsers()
+    }
+    
+}
+
+extension ConversationListModel: IHistoryServiceDelegate {
+    
+    func didAddHistory() {
+        
     }
     
 }

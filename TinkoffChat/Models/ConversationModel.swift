@@ -9,12 +9,10 @@
 import Foundation
 
 struct ConversationModel {
-    
     var name: String?
     var message: String?
     var date: Date?
     var online: Bool
     var hasUnreadMessages: Bool
-    
 }
 

@@ -28,7 +28,7 @@ class ConversationsListViewController: UIViewController, UITableViewDataSource, 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        CommunicationManager.default.delegate = self
+        //CommunicationManager.default.delegate = self
         tableView.reloadData()
     }
     
@@ -39,7 +39,8 @@ class ConversationsListViewController: UIViewController, UITableViewDataSource, 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return CommunicationManager.default.onlineUsers.count
+        //return CommunicationManager.default.onlineUsers.count
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -107,6 +108,7 @@ class ConversationsListViewController: UIViewController, UITableViewDataSource, 
     
 }
 
+/*
 extension ConversationsListViewController: CommunicationManagerDelegate {
     
     func didDataChange() {
@@ -115,4 +117,4 @@ extension ConversationsListViewController: CommunicationManagerDelegate {
         }
     }
     
-}
+}*/

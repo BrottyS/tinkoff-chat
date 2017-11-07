@@ -1,5 +1,5 @@
 //
-//  ProfileModel.swift
+//  ProfileData.swift
 //  TinkoffChat
 //
 //  Created by BrottyS on 16.10.2017.

@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol IConversationListTableViewCellConfiguration: class {
+    func configure(with: ConversationListViewModel)
+}
+
 class ConversationListTableViewCell: UITableViewCell, IConversationListTableViewCellConfiguration {
 
     // MARK: - IBOutlets

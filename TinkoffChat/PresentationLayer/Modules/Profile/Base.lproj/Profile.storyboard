@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -106,12 +105,12 @@
                                 <rect key="frame" x="0.0" y="660" width="414" height="76"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Q1-JF-5o2" customClass="RoundedButton" customModule="TinkoffChat" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="16" width="183" height="44"/>
+                                        <rect key="frame" x="16" y="16" width="382" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="Pae-Yn-F6i"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                        <state key="normal" title="GCD">
+                                        <state key="normal" title="Save">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
@@ -126,44 +125,16 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="didGCDButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2na-Pq-uiS"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TI7-KC-Q6g" customClass="RoundedButton" customModule="TinkoffChat" customModuleProvider="target">
-                                        <rect key="frame" x="215" y="16" width="183" height="44"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="3zS-1v-LWH"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                        <state key="normal" title="Operation">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="12"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="2"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="didOperationButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HxN-Wo-cvW"/>
+                                            <action selector="didSaveButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pQq-yJ-XDg"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="centerX" secondItem="0Q1-JF-5o2" secondAttribute="trailing" constant="8" id="435-rA-GUu"/>
                                     <constraint firstItem="0Q1-JF-5o2" firstAttribute="top" secondItem="inD-1f-ZMR" secondAttribute="top" constant="16" id="Kj1-mM-zeu"/>
-                                    <constraint firstAttribute="bottom" secondItem="TI7-KC-Q6g" secondAttribute="bottom" constant="16" id="Mad-gf-hh1"/>
                                     <constraint firstItem="0Q1-JF-5o2" firstAttribute="leading" secondItem="inD-1f-ZMR" secondAttribute="leading" constant="16" id="NTg-6H-3e5"/>
-                                    <constraint firstItem="TI7-KC-Q6g" firstAttribute="top" secondItem="inD-1f-ZMR" secondAttribute="top" constant="16" id="Rl8-9I-jf9"/>
-                                    <constraint firstItem="TI7-KC-Q6g" firstAttribute="leading" secondItem="inD-1f-ZMR" secondAttribute="centerX" constant="8" id="XTJ-8k-YOf"/>
                                     <constraint firstAttribute="bottom" secondItem="0Q1-JF-5o2" secondAttribute="bottom" constant="16" id="dLJ-Ag-pqL"/>
-                                    <constraint firstAttribute="trailing" secondItem="TI7-KC-Q6g" secondAttribute="trailing" constant="16" id="jbt-sD-wdt"/>
+                                    <constraint firstAttribute="trailing" secondItem="0Q1-JF-5o2" secondAttribute="trailing" constant="16" id="pS5-0U-ALg"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -192,9 +163,8 @@
                         <outlet property="avatarImageView" destination="5tU-8O-jXD" id="2y9-zS-6Ld"/>
                         <outlet property="buttonsView" destination="inD-1f-ZMR" id="0Qu-HD-NjD"/>
                         <outlet property="changeAvatarButton" destination="Zkg-HV-RSD" id="zku-LP-VyP"/>
-                        <outlet property="gcdButton" destination="0Q1-JF-5o2" id="GpN-h5-aBl"/>
                         <outlet property="nameTextField" destination="luG-0c-TCx" id="9P8-ku-lXt"/>
-                        <outlet property="operationButton" destination="TI7-KC-Q6g" id="XXA-9v-ieO"/>
+                        <outlet property="saveButton" destination="0Q1-JF-5o2" id="CAV-Eu-UIe"/>
                         <outlet property="scrollView" destination="4Rf-8n-uSL" id="FCK-9c-9hf"/>
                     </connections>
                 </viewController>

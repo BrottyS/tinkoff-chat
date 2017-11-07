@@ -45,13 +45,17 @@ class MultipeerCommunicator: NSObject, ICommunicator {
     // [peerID.displayName: MCSession]
     private var sessions: [String: MCSession] = [:]
     
-    override init() {
+    private let messageSerializer: IMessageSerializer
+    
+    init(messageSerializer: IMessageSerializer) {
         serviceAdvertiser = MCNearbyServiceAdvertiser(peer: kLocalPeerId,
                                                       discoveryInfo: kDiscoveryInfo,
                                                       serviceType: kServiceType)
         
         serviceBrowser = MCNearbyServiceBrowser(peer: kLocalPeerId,
                                                 serviceType: kServiceType)
+        
+        self.messageSerializer = messageSerializer
         
         super.init()
         
@@ -68,21 +72,29 @@ class MultipeerCommunicator: NSObject, ICommunicator {
     }
     
     func sendMessage(string: String, to userID: String, completionHandler: ((Bool, Error?) -> ())?) {
-        if let session = sessions[userID] {
-            let peersToSend = session.connectedPeers.filter { peer in
-                peer.displayName == userID
-            }
-            do {
-                try session.send(string.data(using: .utf8)!, toPeers: peersToSend, with: .reliable)
-                completionHandler?(true, nil)
-            }
-            catch let error {
-                print("Error sending: \(error)")
-            }
-            
-        } else {
-            completionHandler?(false, nil)
+        guard let session = sessions[userID] else {
             print("Did not found a session with userID: \(userID)")
+            completionHandler?(false, nil)
+            return
+        }
+        
+        let peersToSend = session.connectedPeers.filter { peer in
+            peer.displayName == userID
+        }
+        
+        guard let serializedMessage = messageSerializer.serialize(text: string) else {
+            print("Can't get serialized message")
+            completionHandler?(false, nil)
+            return
+        }
+        
+        do {
+            try session.send(serializedMessage, toPeers: peersToSend, with: .reliable)
+            completionHandler?(true, nil)
+        }
+        catch {
+            print("Error while message sending. \(error.localizedDescription)")
+            completionHandler?(false, error)
         }
     }
     
@@ -150,7 +162,7 @@ extension MultipeerCommunicator: MCSessionDelegate {
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         print("didChangeState:")
         
-        switch state{
+        switch state {
         case .connected:
             print("peer \(peerID) connected to session: \(session)")
             delegate?.didChangeUserStatus(userID: peerID.displayName, online: true)
@@ -167,8 +179,12 @@ extension MultipeerCommunicator: MCSessionDelegate {
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         print("didReceiveData: \(data)")
-        let message = String(data: data, encoding: .utf8)!
-        delegate?.didReceiveMessage(text: message, fromUser: peerID.displayName, toUser: kLocalPeerId.displayName)
+        guard let deserializedMessage = messageSerializer.deserialize(data: data) else {
+            print("Can't get deserialized message")
+            return
+        }
+        
+        delegate?.didReceiveMessage(text: deserializedMessage, fromUser: peerID.displayName, toUser: kLocalPeerId.displayName)
     }
     
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {

@@ -1,64 +1,33 @@
 //
-//  CommunicatorService.swift
+//  CommunicationManager.swift
 //  TinkoffChat
 //
-//  Created by BrottyS on 31.10.2017.
+//  Created by BrottyS on 21.10.2017.
 //  Copyright © 2017 TCS. All rights reserved.
 //
 
+/*
 import Foundation
 
-protocol ICommunicatorService: class {
-    weak var delegate: CommunicatorServiceDelegate? { get set }
-    func getOnlineUsers() -> [UserServiceModel]
-    func sendMessage(_ text: String, to: String)
-}
 
-protocol CommunicatorServiceDelegate: class {
+
+protocol CommunicationManagerDelegate {
     func didDataChange()
 }
 
-class CommunicatorService: ICommunicatorService {
+class CommunicationManager {
     
-    weak var delegate: CommunicatorServiceDelegate?
+    static let `default` = CommunicationManager()
     
-    private let communicator: ICommunicator
+    private let communicator: MultipeerCommunicator
     
-    private var onlineUsers: [UserServiceModel] = []
+    var delegate: CommunicationManagerDelegate?
     
-    init(communicator: ICommunicator) {
-        self.communicator = communicator
-    }
+    var onlineUsers: [User] = []
     
-    // MARK: - ICommunicatorService
-    
-    func getOnlineUsers() -> [UserServiceModel] {
-        return onlineUsers
-    }
-    
-    func sendMessage(_ text: String, to: String) {
-        // prepare message to send
-        let message = Message(eventType: "TextMessage",
-                              messageId: generateMessageId(),
-                              text: text)
-        let messageData = try! JSONEncoder().encode(message)
-        let messageJson = String(data: messageData, encoding: .utf8)!
-        
-        communicator.sendMessage(string: messageJson, to: to) { (success, error) in
-            // if the message sent successfully, add it to history
-            if success {
-                let history = History(date: self.extractDate(from: message.messageId!),
-                                      from: self.communicator.localPeerDisplayName(),
-                                      to: to,
-                                      message: MessageModel(text: text, incoming: false))
-                HistoryManager.default.add(history)
-                self.delegate?.didDataChange()
-            }
-            
-            if let error = error {
-                print("Error while send message: \(error.localizedDescription)")
-            }
-        }
+    init() {
+        communicator = MultipeerCommunicator()
+        communicator.delegate = self
     }
     
     private func generateMessageId() -> String {
@@ -74,14 +43,39 @@ class CommunicatorService: ICommunicatorService {
         return Date(timeIntervalSinceReferenceDate: timeInterval)
     }
     
+    func sendMessage(_ text: String, to: String) {
+        // prepare message to send
+        let message = Message(eventType: "TextMessage",
+                              messageId: generateMessageId(),
+                              text: text)
+        let messageData = try! JSONEncoder().encode(message)
+        let messageJson = String(data: messageData, encoding: .utf8)!
+
+        communicator.sendMessage(string: messageJson, to: to) { (success, error) in
+            // if the message sent successfully, add it to history
+            if success {
+                let history = History(date: self.extractDate(from: message.messageId!),
+                                      from: self.communicator.kLocalPeerId.displayName,
+                                      to: to,
+                                      message: MessageModel(text: text, incoming: false))
+                HistoryManager.default.add(history)
+                self.delegate?.didDataChange()
+            }
+            
+            if let error = error {
+                print("Error while send message: \(error.localizedDescription)")
+            }
+        }
+    }
+    
 }
 
-extension CommunicatorService: MultipeerCommunicatorDelegate {
-        
+extension CommunicationManager: MultipeerCommunicatorDelegate {
+    
     func didFoundUser(userID: String, userName: String?) {
         print("Found user with userID: \(userID), userName: \(userName ?? "?")")
         if !onlineUsers.contains(where: { $0.userID == userID }) {
-            onlineUsers.append(UserServiceModel(userID: userID, userName: userName))
+            onlineUsers.append(User(userID: userID, userName: userName))
         }
         delegate?.didDataChange()
     }
@@ -108,7 +102,7 @@ extension CommunicatorService: MultipeerCommunicatorDelegate {
         // decode message
         let messageData = text.data(using: .utf8)!
         let message = try! JSONDecoder().decode(Message.self, from: messageData)
-        
+    
         // add received message to history
         let history = History(date: extractDate(from: message.messageId!),
                               from: fromUser,
@@ -120,7 +114,7 @@ extension CommunicatorService: MultipeerCommunicatorDelegate {
     }
     
     func didChangeUserStatus(userID: String, online: Bool) {
-        
+
     }
     
-}
+}*/
