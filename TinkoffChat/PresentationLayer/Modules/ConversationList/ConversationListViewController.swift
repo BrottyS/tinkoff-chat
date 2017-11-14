@@ -13,8 +13,14 @@ enum Section: Int {
     case offline
 }
 
-class ConversationListViewController: UIViewController, IConversationListModelDelegate, UITableViewDataSource, UITableViewDelegate {
+protocol IConversationListViewController: class {
+    var assembly: IConversationListAssembly? { get set }
+}
 
+class ConversationListViewController: UIViewController, IConversationListModelDelegate, UITableViewDataSource, UITableViewDelegate, IConversationListViewController {
+
+    var assembly: IConversationListAssembly?
+    
     // MARK: - IBOutlets
     
     @IBOutlet weak var tableView: UITableView!
@@ -106,6 +112,8 @@ class ConversationListViewController: UIViewController, IConversationListModelDe
     // MARK: - UITableViewDelegate
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let conversation = dataSource[indexPath.row]
+        assembly?.presentConversationDetailViewController(from: self, for: conversation.userID)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     

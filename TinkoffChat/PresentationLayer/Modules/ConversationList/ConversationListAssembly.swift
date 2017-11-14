@@ -7,6 +7,8 @@
 //
 
 protocol IConversationListAssembly: class {
+    //init(communicationService: ICommunicationService)
+    
     func conversationListViewController() -> ConversationListViewController
     func presentConversationDetailViewController(from vc: ConversationListViewController, for userID: String)
     func presentProfileViewController(from vc: ConversationListViewController)
@@ -14,15 +16,22 @@ protocol IConversationListAssembly: class {
 
 class ConversationListAssembly: IConversationListAssembly {
     
+    private let communicationService: ICommunicationService
+    
+    init(communicationService: ICommunicationService) {
+        self.communicationService = communicationService
+    }
+    
     func conversationListViewController() -> ConversationListViewController {
         let model = conversationListModel()
         let viewController = ConversationListViewController(model: model)
+        viewController.assembly = self
         model.delegate = viewController
         return viewController
     }
     
     func presentConversationDetailViewController(from vc: ConversationListViewController, for userID: String) {
-        let conversationDetailAssembly: IConversationDetailAssembly = ConversationDetailAssembly()
+        let conversationDetailAssembly: IConversationDetailAssembly = ConversationDetailAssembly(communicationService: communicationService)
         let conversationDetailVC = conversationDetailAssembly.conversationDetailViewController()
         vc.navigationController?.pushViewController(conversationDetailVC, animated: true)
     }
@@ -34,7 +43,7 @@ class ConversationListAssembly: IConversationListAssembly {
     // MARK: - Private section
 
     private func conversationListModel() -> IConversationListModel {
-        let commService = communicationService()
+        let commService = communicationService
         let histService = historyService()
         
         let convListModel = ConversationListModel(communicationService: commService,
@@ -46,12 +55,13 @@ class ConversationListAssembly: IConversationListAssembly {
         return convListModel
     }
 
+    /*
     private func communicationService() -> ICommunicationService {
         let comm = communicator()
         let commService = CommunicationService(communicator: comm)
         comm.delegate = commService
         return commService
-    }
+    }*/
     
     private func historyService() -> IHistoryService {
         let histStorage = historyStorage()
@@ -60,14 +70,16 @@ class ConversationListAssembly: IConversationListAssembly {
         return histService
     }
     
+    /*
     private func communicator() -> ICommunicator {
         let serializer = messageSerializer()
         return MultipeerCommunicator(messageSerializer: serializer)
-    }
+    }*/
     
+    /*
     private func messageSerializer() -> IMessageSerializer {
         return MessageSerializer()
-    }
+    }*/
     
     private func historyStorage() -> IHistoryStorage {
         return HistoryStorage()

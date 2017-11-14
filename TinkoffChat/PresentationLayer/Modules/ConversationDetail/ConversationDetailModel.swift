@@ -21,8 +21,8 @@ class ConversationDetailModel: IConversationDetailModel {
     
     private let communicatorService: ICommunicationService
     
-    init(communicatorService: ICommunicationService) {
-        self.communicatorService = communicatorService
+    init(communicationService: ICommunicationService) {
+        self.communicatorService = communicationService
     }
     
     func getOnlineUsers() {
@@ -44,5 +44,25 @@ class ConversationDetailModel: IConversationDetailModel {
         }
         delegate?.setupDataSource(cells)
     }*/
+    
+}
+
+extension ConversationDetailModel: ICommunicationServiceDelegate {
+    
+    func didFoundUser(userID: String, userName: String?) {
+        
+    }
+    
+    func didLostUser(userID: String) {
+        
+    }
+    
+    func didReceiveMessage(text: String, fromUser: String, toUser: String) {
+        
+    }
+    
+    func didDataChange() {
+        
+    }
     
 }

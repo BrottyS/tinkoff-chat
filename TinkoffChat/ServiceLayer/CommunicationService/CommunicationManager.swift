@@ -45,7 +45,7 @@ class CommunicationManager {
     
     func sendMessage(_ text: String, to: String) {
         // prepare message to send
-        let message = Message(eventType: "TextMessage",
+        let message = MessageStruct(eventType: "TextMessage",
                               messageId: generateMessageId(),
                               text: text)
         let messageData = try! JSONEncoder().encode(message)

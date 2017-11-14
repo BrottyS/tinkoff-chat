@@ -13,6 +13,7 @@ protocol ICommunicator: class {
     weak var delegate: MultipeerCommunicatorDelegate? { get set }
     var online: Bool { get set }
     func localPeerDisplayName() -> String
+    func getOnlineUsers() -> [UserServiceModel]
 }
 
 protocol MultipeerCommunicatorDelegate: class {
@@ -44,6 +45,8 @@ class MultipeerCommunicator: NSObject, ICommunicator {
     
     // [peerID.displayName: MCSession]
     private var sessions: [String: MCSession] = [:]
+    
+    private var onlineUsers: [UserServiceModel] = []
     
     private let messageSerializer: IMessageSerializer
     
@@ -102,7 +105,13 @@ class MultipeerCommunicator: NSObject, ICommunicator {
         return kLocalPeerId.displayName
     }
     
-    func sessionFor(_ remotePeerID: MCPeerID) -> MCSession {
+    func getOnlineUsers() -> [UserServiceModel] {
+        return onlineUsers
+    }
+    
+    // MARK: - Private methods
+    
+    private func sessionFor(_ remotePeerID: MCPeerID) -> MCSession {
         if let session = sessions[remotePeerID.displayName] {
             return session
         } else {
@@ -112,6 +121,18 @@ class MultipeerCommunicator: NSObject, ICommunicator {
             session.delegate = self
             sessions[remotePeerID.displayName] = session
             return sessions[remotePeerID.displayName]!
+        }
+    }
+    
+    private func addOnlineUser(userID: String, userName: String?) {
+        if !onlineUsers.contains(where: { $0.userID == userID }) {
+            onlineUsers.append(UserServiceModel(userID: userID, userName: userName))
+        }
+    }
+    
+    private func removeOnlineUser(userID: String) {
+        if let index = onlineUsers.index(where: { $0.userID == userID }) {
+            onlineUsers.remove(at: index)
         }
     }
     
@@ -144,7 +165,11 @@ extension MultipeerCommunicator: MCNearbyServiceBrowserDelegate {
         print("foundPeer: \(peerID.displayName)")
         let session = sessionFor(peerID)
         browser.invitePeer(peerID, to: session, withContext: nil, timeout: 30)
-        delegate?.didFoundUser(userID: peerID.displayName, userName: info?["userName"])
+        
+        let userID = peerID.displayName
+        let userName = info?["userName"]
+        addOnlineUser(userID: userID, userName: userName)
+        delegate?.didFoundUser(userID: userID, userName: userName)
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
@@ -152,6 +177,8 @@ extension MultipeerCommunicator: MCNearbyServiceBrowserDelegate {
         if let _ = sessions[peerID.displayName] {
             sessions[peerID.displayName] = nil
         }
+        
+        removeOnlineUser(userID: peerID.displayName)
         delegate?.didLostUser(userID: peerID.displayName)
     }
     

@@ -9,6 +9,7 @@
 import Foundation
 
 struct ConversationListViewModel {
+    var userID: String
     var name: String?
     var message: String?
     var date: Date?

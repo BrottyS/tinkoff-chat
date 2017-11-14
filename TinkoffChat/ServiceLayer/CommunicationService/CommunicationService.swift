@@ -15,6 +15,10 @@ protocol ICommunicationService: class {
 }
 
 protocol ICommunicationServiceDelegate: class {
+    func didFoundUser(userID: String, userName: String?)
+    func didLostUser(userID: String)
+    func didReceiveMessage(text: String, fromUser: String, toUser: String)
+    
     func didDataChange()
     //func didSendMessage()
 }
@@ -25,8 +29,6 @@ class CommunicationService: ICommunicationService {
     
     private let communicator: ICommunicator
     
-    private var onlineUsers: [UserServiceModel] = []
-    
     init(communicator: ICommunicator) {
         self.communicator = communicator
     }
@@ -34,7 +36,7 @@ class CommunicationService: ICommunicationService {
     // MARK: - ICommunicationService
     
     func getOnlineUsers() -> [UserServiceModel] {
-        return onlineUsers
+        return communicator.getOnlineUsers()
     }
     
     func sendMessage(_ text: String, to: String, completionHandler: ((Bool, Error?) -> ())?) {
@@ -65,18 +67,14 @@ extension CommunicationService: MultipeerCommunicatorDelegate {
         
     func didFoundUser(userID: String, userName: String?) {
         print("Found user with userID: \(userID), userName: \(userName ?? "?")")
-        if !onlineUsers.contains(where: { $0.userID == userID }) {
-            onlineUsers.append(UserServiceModel(userID: userID, userName: userName))
-        }
-        delegate?.didDataChange()
+        //delegate?.didDataChange()
+        delegate?.didFoundUser(userID: userID, userName: userName)
     }
     
     func didLostUser(userID: String) {
         print("Lost user with userID: \(userID)")
-        if let index = onlineUsers.index(where: { $0.userID == userID }) {
-            onlineUsers.remove(at: index)
-            delegate?.didDataChange()
-        }
+        //delegate?.didDataChange()
+        delegate?.didLostUser(userID: userID)
     }
     
     func failedToStartBrowsingForUsers(error: Error) {

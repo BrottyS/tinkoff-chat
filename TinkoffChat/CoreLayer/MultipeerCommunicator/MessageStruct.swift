@@ -6,7 +6,7 @@
 //  Copyright © 2017 TCS. All rights reserved.
 //
 
-struct Message: Codable {
+struct MessageStruct: Codable {
     var eventType: String?
     var messageId: String?
     var text: String?

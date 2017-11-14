@@ -33,7 +33,8 @@ class ConversationListModel: IConversationListModel {
         var cells: [ConversationListViewModel] = []
         for user in onlineUsers {
             let lastMessage = HistoryManager.default.lastMessageFor(userID: user.userID)
-            let cell = ConversationListViewModel(name: user.userName,
+            let cell = ConversationListViewModel(userID: user.userID,
+                                                 name: user.userName,
                                                  message: lastMessage?.message.text,
                                                  date: lastMessage?.date,
                                                  online: true,
@@ -46,6 +47,18 @@ class ConversationListModel: IConversationListModel {
 }
 
 extension ConversationListModel: ICommunicationServiceDelegate {
+    
+    func didFoundUser(userID: String, userName: String?) {
+        getOnlineUsers()
+    }
+    
+    func didLostUser(userID: String) {
+        getOnlineUsers()
+    }
+    
+    func didReceiveMessage(text: String, fromUser: String, toUser: String) {
+        
+    }
     
     func didDataChange() {
         getOnlineUsers()

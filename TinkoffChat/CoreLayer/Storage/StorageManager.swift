@@ -9,6 +9,8 @@
 protocol IStorageManager: class {
     func save(_ profile: ProfileModel, completion: @escaping (Result) -> ())
     func read(completion: @escaping (ProfileModel?) -> ())
+    
+    func addOnlineUser(userID: String, userName: String?)
 }
 
 class StorageManager: IStorageManager {
@@ -25,6 +27,14 @@ class StorageManager: IStorageManager {
     
     func read(completion: @escaping (ProfileModel?) -> ()) {
         
+    }
+    
+    func addOnlineUser(userID: String, userName: String?) {
+        let saveContext = coreDataStack.saveContext
+        saveContext.perform {
+            guard let conversation = Conversation.findOrInsertConversation(with: userID, in: saveContext) else { return }
+
+        }
     }
     
 }

@@ -16,7 +16,7 @@ protocol IMessageSerializer: class {
 class MessageSerializer: IMessageSerializer {
     
     func serialize(text: String) -> Data? {
-        let message = Message(eventType: "TextMessage",
+        let message = MessageStruct(eventType: "TextMessage",
                               messageId: generateMessageId(),
                               text: text)
         do {
@@ -35,7 +35,7 @@ class MessageSerializer: IMessageSerializer {
         //let message = String(data: data, encoding: .utf8)
         //let messageData = message?.data(using: .utf8)
         do {
-            let message = try JSONDecoder().decode(Message.self, from: data)
+            let message = try JSONDecoder().decode(MessageStruct.self, from: data)
             return message.text
         } catch {
             print("Error while message deserialization. \(error.localizedDescription)")

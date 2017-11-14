@@ -9,7 +9,10 @@
 import CoreData
 
 protocol ICoreDataStack: class {
-    
+    var masterContext: NSManagedObjectContext { get set }
+    var mainContext: NSManagedObjectContext { get set }
+    var saveContext: NSManagedObjectContext { get set }
+    func performSave(context: NSManagedObjectContext, completionHandler: (() -> Void)?)
 }
 
 class CoreDataStack: ICoreDataStack {
@@ -69,8 +72,9 @@ class CoreDataStack: ICoreDataStack {
     
     // MARK: - NSManagedObjectContext (Master)
     
+    /*
     private var _masterContext: NSManagedObjectContext?
-    private var masterContext: NSManagedObjectContext? {
+    private var masterContext: NSManagedObjectContext {
         get {
             if _masterContext == nil {
                 let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
@@ -87,10 +91,19 @@ class CoreDataStack: ICoreDataStack {
             
             return _masterContext
         }
-    }
+    }*/
+    
+    lazy var masterContext: NSManagedObjectContext = {
+        let masterContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        masterContext.persistentStoreCoordinator = self.persistentStoreCoordinator
+        masterContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+        masterContext.undoManager = nil
+        return masterContext
+    }()
     
     // MARK: - NSManagedObjectContext (Main)
     
+    /*
     private var _mainContext: NSManagedObjectContext?
     private var mainContext: NSManagedObjectContext? {
         get {
@@ -109,10 +122,19 @@ class CoreDataStack: ICoreDataStack {
             
             return _mainContext
         }
-    }
+    }*/
+    
+    lazy var mainContext: NSManagedObjectContext = {
+        let mainContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        mainContext.parent = self.masterContext
+        mainContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+        mainContext.undoManager = nil
+        return mainContext
+    }()
     
     // MARK: - NSManagedObjectContext (Save)
     
+    /*
     private var _saveContext: NSManagedObjectContext?
     private var saveContext: NSManagedObjectContext? {
         get {
@@ -131,7 +153,15 @@ class CoreDataStack: ICoreDataStack {
             
             return _saveContext
         }
-    }
+    }*/
+    
+    lazy var saveContext: NSManagedObjectContext = {
+        let saveContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        saveContext.parent = self.mainContext
+        saveContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        saveContext.undoManager = nil
+        return saveContext
+    }()
     
     // MARK: - Saving
     

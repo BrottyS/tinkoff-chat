@@ -45,7 +45,7 @@ class ConversationViewController: UIViewController, UITableViewDataSource {
         super.viewWillAppear(animated)
         
         //CommunicationManager.default.delegate = self
-        data = HistoryManager.default.historyFor(userID: user!.userID)
+        //data = HistoryManager.default.historyFor(userID: user!.userID)
         tableView.reloadData()
     }
     
