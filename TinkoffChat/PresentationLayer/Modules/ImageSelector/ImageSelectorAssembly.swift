@@ -13,7 +13,24 @@ protocol IImageSelectorAssembly: class {
 class ImageSelectorAssembly: IImageSelectorAssembly {
 
     func imageSelectorViewController() -> ImageSelectorViewController {
-        return ImageSelectorViewController()
+        let interactor = imageSelectorInteractor()
+        let imageSelectorVC = ImageSelectorViewController(interactor: interactor)
+        interactor.delegate = imageSelectorVC
+        return imageSelectorVC
+    }
+    
+    // MARK: - Private methods
+    
+    private func imageSelectorInteractor() -> IImageSelectorInteractor {
+        return ImageSelectorInteractor(pixabayService: pixabayService())
+    }
+    
+    private func pixabayService() -> IPixabayService {
+        return PixabayService(requestSender: requestSender())
+    }
+    
+    private func requestSender() -> IRequestSender {
+        return RequestSender()
     }
     
 }

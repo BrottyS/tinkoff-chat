@@ -17,8 +17,22 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xjq-lA-Gr0">
+                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                    </imageView>
+                </subviews>
             </view>
+            <constraints>
+                <constraint firstItem="xjq-lA-Gr0" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Nv3-g2-hSC"/>
+                <constraint firstItem="xjq-lA-Gr0" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="QmH-xe-zKP"/>
+                <constraint firstAttribute="bottom" secondItem="xjq-lA-Gr0" secondAttribute="bottom" id="ehB-Dx-BU5"/>
+                <constraint firstAttribute="trailing" secondItem="xjq-lA-Gr0" secondAttribute="trailing" id="n2g-67-T5n"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <connections>
+                <outlet property="imageView" destination="xjq-lA-Gr0" id="Jzh-Vs-C2j"/>
+            </connections>
         </collectionViewCell>
     </objects>
 </document>

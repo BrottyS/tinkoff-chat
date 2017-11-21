@@ -8,14 +8,27 @@
 
 import UIKit
 
-class ImageSelectorViewController: UIViewController {
+class ImageSelectorViewController: UIViewController, IImageSelectorInteractorDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
     // MARK: - Private Constants
     
+    private let interactor: IImageSelectorInteractor
+    
     private let kItemsByHorizontal: CGFloat = 3
     private let kItemPadding: CGFloat = 8
+    
+    private var dataSource: [PixabayDisplayModel] = []
+    
+    init(interactor: IImageSelectorInteractor) {
+        self.interactor = interactor
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,18 +49,24 @@ class ImageSelectorViewController: UIViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        
-        //flowLayout = UICollectionViewFlowLayout()
-        //flowLayout.itemSize = CGSize(width: frame.width / CGFloat(columns), height: frame.height / CGFloat(rows))
-        //flowLayout.itemSize = CGSize(width: 50, height: 50)
-        //flowLayout.minimumInteritemSpacing = 0
-        //flowLayout.minimumLineSpacing = 0
-        
-        //collectionView.flow
     }
     
     @IBAction func didCloseBarButtonItemTap(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: - IImageSelectorInteractorDelegate
+    
+    func setup(dataSource: [PixabayDisplayModel]) {
+        self.dataSource = dataSource
+        
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+    }
+    
+    func show(error message: String) {
+        
     }
 
 }
@@ -59,13 +78,15 @@ extension ImageSelectorViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        //return dataSource.count
         return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(ImageSelectorCell.self)", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(ImageSelectorCell.self)", for: indexPath) as! ImageSelectorCell
         
         cell.backgroundColor = .red
+        //cell.imageView.image = UIImage()
         
         return cell
     }
@@ -90,6 +111,5 @@ extension ImageSelectorViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return kItemPadding
     }
-    
     
 }

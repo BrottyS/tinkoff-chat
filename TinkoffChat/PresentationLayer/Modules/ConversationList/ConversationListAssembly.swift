@@ -38,7 +38,7 @@ class ConversationListAssembly: IConversationListAssembly {
         vc.navigationController?.pushViewController(conversationDetailVC, animated: true)
     }
     
-    func presentProfileViewController(from vc: ConversationListViewController) {        
+    func presentProfileViewController(from vc: ConversationListViewController) {
         let profileVC = ProfileAssembly().profileViewController()
         let profileNC = UINavigationController(rootViewController: profileVC)
         vc.present(profileNC, animated: true, completion: nil)
