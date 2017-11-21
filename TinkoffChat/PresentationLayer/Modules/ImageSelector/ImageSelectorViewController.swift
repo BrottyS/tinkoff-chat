@@ -35,6 +35,8 @@ class ImageSelectorViewController: UIViewController, IImageSelectorInteractorDel
 
         configureView()
         configureCollectionView()
+        
+        interactor.fetchImageHits()
     }
     
     private func configureView() {
