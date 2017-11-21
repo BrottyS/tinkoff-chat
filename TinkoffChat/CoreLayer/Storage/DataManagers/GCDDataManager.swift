@@ -17,14 +17,14 @@ class GCDDataManager: DataManagerProtocol {
         self.fileName = (dir as NSString).appendingPathComponent(fileName)
     }
     
-    func save(_ profile: ProfileModel, completion: @escaping (Result) -> ()) {
+    func save(_ profile: ProfileModel, completion: @escaping (Bool) -> ()) {
         let dict = profile.toDictionary()
         DispatchQueue.global(qos: .utility).async {
             if let readDict = NSDictionary(contentsOfFile: self.fileName) {
                 let readProfile = ProfileModel(dict: readDict)
                 if profile == readProfile {
                     DispatchQueue.main.async {
-                        completion(.success)
+                        completion(true)
                         return
                     }
                 }
@@ -32,7 +32,7 @@ class GCDDataManager: DataManagerProtocol {
 
             let res = dict.write(toFile: self.fileName, atomically: false)
             DispatchQueue.main.async {
-                completion(res == true ? .success : .failure)
+                completion(res == true ? true : false)
             }
         }
     }

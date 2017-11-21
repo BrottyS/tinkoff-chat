@@ -7,8 +7,6 @@
 //
 
 struct MessageModel {
-    
     var text: String?
     var incoming: Bool
-    
 }

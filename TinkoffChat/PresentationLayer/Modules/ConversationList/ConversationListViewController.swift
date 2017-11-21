@@ -67,9 +67,7 @@ class ConversationListViewController: UIViewController, IConversationListModelDe
     }
     
     @IBAction func didProfileBarButtonItemTap(_ sender: UIBarButtonItem) {
-        let profileStoryboard = UIStoryboard(name: "Profile", bundle: nil)
-        let profileNavigationController = profileStoryboard.instantiateViewController(withIdentifier: "ProfileNavigationController")
-        present(profileNavigationController, animated: true, completion: nil)
+        assembly?.presentProfileViewController(from: self)
     }
     
     // MARK: - IConversationListModelDelegate

@@ -48,7 +48,7 @@ class OperationDataManager: DataManagerProtocol {
         self.fileName = (dir as NSString).appendingPathComponent(fileName)
     }
     
-    func save(_ profile: ProfileModel, completion: @escaping (Result) -> ()) {
+    func save(_ profile: ProfileModel, completion: @escaping (Bool) -> ()) {
         //let dict = profile.toDictionary()
         
         let saveOperation = SaveOperation()
@@ -57,7 +57,7 @@ class OperationDataManager: DataManagerProtocol {
         saveOperation.toFile = fileName
         saveOperation.completionBlock = {
             DispatchQueue.main.async {
-                completion(saveOperation.res == true ? .success : .failure)
+                completion(saveOperation.res == true ? true : false)
             }
         }
         

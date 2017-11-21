@@ -7,6 +7,6 @@
 //
 
 protocol DataManagerProtocol {
-    func save(_ profile: ProfileModel, completion: @escaping (Result) -> ())
+    func save(_ profile: ProfileModel, completion: @escaping (Bool) -> ())
     func read(completion: @escaping (ProfileModel?) -> ())
 }

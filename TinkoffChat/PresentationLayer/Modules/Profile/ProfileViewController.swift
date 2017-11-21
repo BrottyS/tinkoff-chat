@@ -10,6 +10,8 @@ import UIKit
 
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
+    var assembly: IProfileAssembly?
+    
     @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var avatarImageView: UIImageView!
@@ -21,8 +23,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
     @IBOutlet weak var buttonsView: UIView!
-    @IBOutlet weak var gcdButton: UIButton!
-    @IBOutlet weak var operationButton: UIButton!
+    //@IBOutlet weak var gcdButton: UIButton!
+    //@IBOutlet weak var operationButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     
     let imagePicker = UIImagePickerController()
@@ -47,6 +49,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureView()
+        
         let cornerRadius = changeAvatarButton.frame.width / 2.0
         changeAvatarButton.layer.cornerRadius = cornerRadius
         avatarImageView.layer.cornerRadius = cornerRadius
@@ -66,6 +70,13 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         aboutMeTextField.delegate = self
         
         readProfile()
+    }
+    
+    private func configureView() {
+        navigationItem.title = "Profile"
+        
+        let closeButton = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(didCloseBarButtonItemTap(_:)))
+        navigationItem.leftBarButtonItem = closeButton
     }
     
     @objc func dismissKeyboard() {
@@ -91,10 +102,15 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             self.present(self.imagePicker, animated: true)
         }
         
+        let loadImageFromInternetAction = UIAlertAction(title: "Загрузить", style: .default) { action in
+            self.assembly?.presentImageSelectorViewController(from: self)
+        }
+        
         let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
         
         alert.addAction(pickImageFromGalleryAction)
         alert.addAction(takePhotoAction)
+        alert.addAction(loadImageFromInternetAction)
         alert.addAction(cancelAction)
         
         present(alert, animated: true)
@@ -127,7 +143,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         dataManager.save(profile) { result in
             switch result {
-            case .success:
+            case true:
                 print("Успешно сохранено")
                 let successAlert = UIAlertController(title: nil, message: "Данные сохранены", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "OK", style: .default, handler: { action in
@@ -139,7 +155,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                 successAlert.addAction(okAction)
                 self.present(successAlert, animated: true, completion: nil)
                 
-            case .failure:
+            case false:
                 print("Ошибка при сохранении")
                 let failureAlert = UIAlertController(title: "Ошибка", message: "Не удалось сохранить данные", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "OK", style: .default, handler: { action in
@@ -220,8 +236,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     private func makeControlsEnabled(_ enable: Bool) {
-        gcdButton.isEnabled = enable
-        operationButton.isEnabled = enable
+        //gcdButton.isEnabled = enable
+        //operationButton.isEnabled = enable
     }
     
     // UITextFieldDelegate

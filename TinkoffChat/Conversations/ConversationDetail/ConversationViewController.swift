@@ -6,6 +6,7 @@
 //  Copyright © 2017 TCS. All rights reserved.
 //
 
+/*
 import UIKit
 
 class ConversationViewController: UIViewController, UITableViewDataSource {
@@ -114,3 +115,4 @@ extension ConversationViewController: CommunicationManagerDelegate {
     }
     
 }*/
+ */

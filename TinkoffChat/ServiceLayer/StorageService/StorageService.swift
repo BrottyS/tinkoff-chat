@@ -6,13 +6,8 @@
 //  Copyright © 2017 TCS. All rights reserved.
 //
 
-enum Result {
-    case success
-    case failure
-}
-
 protocol IStorageService: class {
-    func save(_ profile: ProfileModel, completion: @escaping (Result) -> ())
+    func save(_ profile: ProfileModel, completion: @escaping (Bool) -> ())
     func read(completion: @escaping (ProfileModel?) -> ())
 }
 
@@ -24,7 +19,7 @@ class StorageService: IStorageService {
         self.storageManager = storageManager
     }
     
-    func save(_ profile: ProfileModel, completion: @escaping (Result) -> ()) {
+    func save(_ profile: ProfileModel, completion: @escaping (Bool) -> ()) {
         storageManager.save(profile, completion: completion)
     }
     

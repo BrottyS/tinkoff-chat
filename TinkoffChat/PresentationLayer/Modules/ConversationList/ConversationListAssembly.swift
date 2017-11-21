@@ -6,6 +6,8 @@
 //  Copyright © 2017 TCS. All rights reserved.
 //
 
+import UIKit
+
 protocol IConversationListAssembly: class {
     //init(communicationService: ICommunicationService)
     
@@ -36,8 +38,10 @@ class ConversationListAssembly: IConversationListAssembly {
         vc.navigationController?.pushViewController(conversationDetailVC, animated: true)
     }
     
-    func presentProfileViewController(from vc: ConversationListViewController) {
-        
+    func presentProfileViewController(from vc: ConversationListViewController) {        
+        let profileVC = ProfileAssembly().profileViewController()
+        let profileNC = UINavigationController(rootViewController: profileVC)
+        vc.present(profileNC, animated: true, completion: nil)
     }
 
     // MARK: - Private section

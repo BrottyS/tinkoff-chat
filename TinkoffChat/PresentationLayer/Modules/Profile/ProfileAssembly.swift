@@ -6,15 +6,26 @@
 //  Copyright © 2017 TCS. All rights reserved.
 //
 
+import UIKit
+
 protocol IProfileAssembly: class {
     func profileViewController() -> ProfileViewController
+    func presentImageSelectorViewController(from vc: ProfileViewController)
 }
 
 class ProfileAssembly: IProfileAssembly {
     
     func profileViewController() -> ProfileViewController {
         let model = profileInteractor()
-        return ProfileViewController(model: model)
+        let profileVC = ProfileViewController(model: model)
+        profileVC.assembly = self
+        return profileVC
+    }
+    
+    func presentImageSelectorViewController(from vc: ProfileViewController) {
+        let imageSelectorVC = ImageSelectorAssembly().imageSelectorViewController()
+        let imageSelectorNC = UINavigationController(rootViewController: imageSelectorVC)
+        vc.present(imageSelectorNC, animated: true, completion: nil)
     }
     
     // MARK: - Private section

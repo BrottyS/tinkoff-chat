@@ -7,7 +7,7 @@
 //
 
 protocol IStorageManager: class {
-    func save(_ profile: ProfileModel, completion: @escaping (Result) -> ())
+    func save(_ profile: ProfileModel, completion: @escaping (Bool) -> ())
     func read(completion: @escaping (ProfileModel?) -> ())
     
     func addOnlineUser(userID: String, userName: String?)
@@ -21,7 +21,7 @@ class StorageManager: IStorageManager {
         self.coreDataStack = coreDataStack
     }
     
-    func save(_ profile: ProfileModel, completion: @escaping (Result) -> ()) {
+    func save(_ profile: ProfileModel, completion: @escaping (Bool) -> ()) {
         
     }
     
