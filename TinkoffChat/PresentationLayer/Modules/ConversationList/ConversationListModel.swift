@@ -9,6 +9,8 @@
 protocol IConversationListModel: class {
     weak var delegate: IConversationListModelDelegate? { get set }
     func getOnlineUsers()
+    
+    func setupCommunicationServiceDelegate()
 }
 
 protocol IConversationListModelDelegate: class {
@@ -42,6 +44,10 @@ class ConversationListModel: IConversationListModel {
             cells.append(cell)
         }
         delegate?.setupDataSource(cells)
+    }
+    
+    func setupCommunicationServiceDelegate() {
+        communicationService.delegate = self
     }
     
 }

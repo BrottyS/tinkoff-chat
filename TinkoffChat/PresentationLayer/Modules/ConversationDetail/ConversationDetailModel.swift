@@ -9,20 +9,27 @@
 protocol IConversationDetailModel: class {
     weak var delegate: ConversationDetailModelDelegate? { get set }
     func getOnlineUsers()
+    
+    func setupCommunicationServiceDelegate()
 }
 
 protocol ConversationDetailModelDelegate: class {
     func setupDataSource(_ dataSource: [ConversationDetailViewModel])
+    
+    func userBecomeOnline()
+    func userBecomeOffline()
 }
 
 class ConversationDetailModel: IConversationDetailModel {
     
     weak var delegate: ConversationDetailModelDelegate?
     
-    private let communicatorService: ICommunicationService
+    private let communicationService: ICommunicationService
+    private let userID: String
     
-    init(communicationService: ICommunicationService) {
-        self.communicatorService = communicationService
+    init(communicationService: ICommunicationService, userID: String) {
+        self.communicationService = communicationService
+        self.userID = userID
     }
     
     func getOnlineUsers() {
@@ -45,16 +52,24 @@ class ConversationDetailModel: IConversationDetailModel {
         delegate?.setupDataSource(cells)
     }*/
     
+    func setupCommunicationServiceDelegate() {
+        communicationService.delegate = self
+    }
+    
 }
 
 extension ConversationDetailModel: ICommunicationServiceDelegate {
     
     func didFoundUser(userID: String, userName: String?) {
-        
+        if userID == self.userID {
+            delegate?.userBecomeOnline()
+        }
     }
     
     func didLostUser(userID: String) {
-        
+        if userID == self.userID {
+            delegate?.userBecomeOffline()
+        }
     }
     
     func didReceiveMessage(text: String, fromUser: String, toUser: String) {

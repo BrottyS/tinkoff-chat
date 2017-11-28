@@ -9,8 +9,6 @@
 import UIKit
 
 protocol IConversationListAssembly: class {
-    //init(communicationService: ICommunicationService)
-    
     func conversationListViewController() -> ConversationListViewController
     func presentConversationDetailViewController(from vc: ConversationListViewController, for userID: String)
     func presentProfileViewController(from vc: ConversationListViewController)
@@ -33,7 +31,7 @@ class ConversationListAssembly: IConversationListAssembly {
     }
     
     func presentConversationDetailViewController(from vc: ConversationListViewController, for userID: String) {
-        let conversationDetailAssembly: IConversationDetailAssembly = ConversationDetailAssembly(communicationService: communicationService)
+        let conversationDetailAssembly: IConversationDetailAssembly = ConversationDetailAssembly(communicationService: communicationService, userID: userID)
         let conversationDetailVC = conversationDetailAssembly.conversationDetailViewController()
         vc.navigationController?.pushViewController(conversationDetailVC, animated: true)
     }
@@ -53,7 +51,8 @@ class ConversationListAssembly: IConversationListAssembly {
         let convListModel = ConversationListModel(communicationService: commService,
                                                   historyService: histService)
         
-        commService.delegate = convListModel
+        //commService.delegate = convListModel
+        //convListModel.setupCommunicationServiceDelegate()
         histService.delegate = convListModel
         
         return convListModel

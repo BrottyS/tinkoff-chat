@@ -13,9 +13,11 @@ protocol IConversationDetailAssembly: class {
 class ConversationDetailAssembly: IConversationDetailAssembly {
     
     private let communicationService: ICommunicationService
+    private let userID: String
     
-    init(communicationService: ICommunicationService) {
+    init(communicationService: ICommunicationService, userID: String) {
         self.communicationService = communicationService
+        self.userID = userID
     }
     
     func conversationDetailViewController() -> ConversationDetailViewController {
@@ -28,7 +30,7 @@ class ConversationDetailAssembly: IConversationDetailAssembly {
     // MARK: - Private methods
     
     private func conversationDetailModel() -> IConversationDetailModel {
-        let convDetailModel = ConversationDetailModel(communicationService: communicationService)
+        let convDetailModel = ConversationDetailModel(communicationService: communicationService, userID: userID)
         communicationService.delegate = convDetailModel
         return convDetailModel
     }

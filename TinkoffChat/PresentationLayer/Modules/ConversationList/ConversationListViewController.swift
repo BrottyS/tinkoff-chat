@@ -45,6 +45,13 @@ class ConversationListViewController: UIViewController, IConversationListModelDe
         configureNavigationItem()
         configureTableView()
         
+        //model.getOnlineUsers()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        model.setupCommunicationServiceDelegate()
         model.getOnlineUsers()
     }
 
